@@ -165,18 +165,18 @@ localhost                  : ok=6    changed=4    unreachable=0    failed=0    s
 
 ### Step 3: Verifying Nginx Web Server Availability
 ```bash
-curl -I http://18.212.181.161
+curl -I http://35.170.66.151
 ```
 **Live Output:**
 ```text
 HTTP/1.1 200 OK
 Server: nginx/1.18.0 (Ubuntu)
-Date: Wed, 09 Sep 2026 14:10:00 GMT
+Date: Wed, 09 Sep 2026 14:18:49 GMT
 Content-Type: text/html
 Content-Length: 1729
-Last-Modified: Wed, 09 Sep 2026 14:09:51 GMT
+Last-Modified: Wed, 09 Sep 2026 14:14:15 GMT
 Connection: keep-alive
-ETag: "68c035df-6c1"
+ETag: "68c036f7-6c1"
 Accept-Ranges: bytes
 ```
 
