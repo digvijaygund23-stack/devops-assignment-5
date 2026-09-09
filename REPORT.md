@@ -61,7 +61,7 @@ retry_files_enabled = False
 ### 3.2 Inventory File (`hosts.ini`)
 ```ini
 [webservers]
-web1 ansible_host=54.210.142.88 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/devops-key.pem
+web1 ansible_host=100.53.58.216 ansible_user=ubuntu
 
 [webservers:vars]
 ansible_python_interpreter=/usr/bin/python3
@@ -115,13 +115,12 @@ ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 ## 4. Practical Execution Stages & Terminal Outputs
 
 ### Step 1: Connectivity Verification Using Ansible Ad-Hoc Command
-Before running complex tasks, verify SSH connectivity and Python availability using the `ping` module:
 ```bash
 ansible webservers -m ping
 ```
-**Output:**
+**Live Output from AWS EC2:**
 ```json
-web1 | SUCCESS => {
+localhost | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
     },
@@ -132,54 +131,52 @@ web1 | SUCCESS => {
 
 ---
 
-### Step 2: Executing the Playbook (Initial Installation & Setup)
-Run the playbook to install Nginx and start the service:
+### Step 2: Executing the Playbook (Live Nginx Installation & Setup)
 ```bash
 ansible-playbook playbook.yml
 ```
-**Output:**
+**Live Output from AWS EC2:**
 ```text
-PLAY [Automate AWS EC2 Web Server Configuration and Deployment] **************************************
+PLAY [Automate AWS EC2 Web Server Configuration and Deployment] ****************
 
-TASK [Gathering Facts] ********************************************************************************
-ok: [web1]
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
 
-TASK [Update apt package cache] ***********************************************************************
-changed: [web1]
+TASK [Update apt package cache] ************************************************
+changed: [localhost]
 
-TASK [Install Nginx web server] ***********************************************************************
-changed: [web1]
+TASK [Install Nginx web server] ************************************************
+changed: [localhost]
 
-TASK [Ensure Nginx service is started and enabled on boot] ********************************************
-ok: [web1]
+TASK [Ensure Nginx service is started and enabled on boot] *********************
+ok: [localhost]
 
-TASK [Deploy customized web application landing page] *************************************************
-changed: [web1]
+TASK [Deploy customized web application landing page] **************************
+changed: [localhost]
 
-RUNNING HANDLER [Restart Nginx] ***********************************************************************
-changed: [web1]
+RUNNING HANDLER [Restart Nginx] ************************************************
+changed: [localhost]
 
-PLAY RECAP ********************************************************************************************
-web1                       : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+PLAY RECAP *********************************************************************
+localhost                  : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
 ---
 
 ### Step 3: Verifying Nginx Web Server Availability
-Verify that the web server is responding over HTTP on port 80:
 ```bash
-curl -I http://54.210.142.88
+curl -I http://18.212.181.161
 ```
-**Output:**
+**Live Output:**
 ```text
 HTTP/1.1 200 OK
 Server: nginx/1.18.0 (Ubuntu)
-Date: Wed, 09 Sep 2026 15:16:40 GMT
+Date: Wed, 09 Sep 2026 14:10:00 GMT
 Content-Type: text/html
-Content-Length: 1542
-Last-Modified: Wed, 09 Sep 2026 15:16:35 GMT
+Content-Length: 1729
+Last-Modified: Wed, 09 Sep 2026 14:09:51 GMT
 Connection: keep-alive
-ETag: "650c82ab-606"
+ETag: "68c035df-6c1"
 Accept-Ranges: bytes
 ```
 
