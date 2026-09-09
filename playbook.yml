@@ -1,0 +1,38 @@
+---
+- name: Automate AWS EC2 Web Server Configuration and Deployment
+  hosts: webservers
+  become: yes
+  vars:
+    web_root: /var/www/html
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install Nginx web server
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx service is started and enabled on boot
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Deploy customized web application landing page
+      copy:
+        src: index.html
+        dest: "{{ web_root }}/index.html"
+        owner: www-data
+        group: www-data
+        mode: '0644'
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
